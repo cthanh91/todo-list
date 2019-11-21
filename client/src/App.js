@@ -35,9 +35,12 @@ const App = () => {
     };
     return success;
   };
-  useEffect(async () => {
-    const data = await getToDosApi();
-    setToDos(data)
+  useEffect(() => {
+    const func = async () => {
+      const data = await getToDosApi();
+      setToDos(data);
+    }
+    func();
   }, []);
 
   return (
