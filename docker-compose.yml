@@ -1,0 +1,34 @@
+version: '3'
+services:
+  redis:
+    image: redis
+  db:
+    image: postgres
+    environment:
+      - POSTGRES_USER=root
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_DB=todo-list
+  server:
+    build: ./server
+    ports:
+      - 3000:80
+    environment:
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - PGHOST=db
+      - PGUSER=root
+      - PGPASSWORD=1234
+      - PGDATABASE=todo-list
+      - PGPORT=5432
+    volumes:
+      - /usr/app/node_modules
+      - ./server:/usr/app
+  web:
+    build:
+      context: ./client
+      dockerfile: Dockerfile.dev
+    ports:
+      - 8080:3000
+    volumes:
+      - /usr/app/node_modules
+      - ./client:/usr/app
