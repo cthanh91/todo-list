@@ -10,7 +10,6 @@ app.use(bodyParser.json());
 
 const { Pool } = require("pg");
 const config = require("./config");
-console.log(config)
 
 const pgClient = new Pool({
   host: config.pgHost,
